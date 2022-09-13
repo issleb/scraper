@@ -4,30 +4,38 @@ import re
 def get_movie(tag):
     title = _get_title(tag)
     year = _get_year(tag)
+    link = _get_link(tag)
 
     movie = Movie()
     movie.title = title
+    movie.link = link
     movie.year = year
 
     return movie
 
 def _get_title(text):
-    regex = r">([^<]*)</A>"
-    result = re.search(regex, text)
-
-    if not result:
-        return
-
-    return result.group(1)
+    regex = r'>([^<]*)</A>'
+    result = _search(regex, text)
+    return result
 
 def _get_year(text):
-    regex = r"/A> \((....)"
+    regex = r'/A> \((....)'
+    result = _search(regex, text)
+    return result
+
+def _get_link(text):
+    regex = r'F="([^"]*)">'
+    result = _search(regex, text)
+    return result    
+
+
+def _search(regex, text):
     result = re.search(regex, text)
 
     if not result:
         return
 
-    return result.group(1)
+    return result.group(1)    
 
 
 @dataclass

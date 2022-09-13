@@ -8,4 +8,5 @@ def test_first():
     print(result)
 
     assert result.title == "The Abyss"
+    assert result.link == "/reviews/reviewsa-d/abyss.htm"
     assert result.year == "1989"
