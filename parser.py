@@ -1,6 +1,6 @@
 from dataclasses import dataclass
+from dataclasses_json import dataclass_json
 import re
-import json
 
 def get_movie(tag):
     
@@ -9,12 +9,7 @@ def get_movie(tag):
     link = _get_link(tag)
     rating = _get_rating(tag)
 
-    movie = Movie()
-    movie.title = title
-    movie.link = link
-    movie.year = year
-    movie.rating = rating
-
+    movie = Movie(title=title, link=link, year=year, rating=rating)
     return movie
 
 def _get_title(text):
@@ -46,13 +41,10 @@ def _search(regex, text):
 
     return result.group(1)    
 
-
+@dataclass_json
 @dataclass
 class Movie:
     title: str = None
     year: str = None
     link: str = None
     rating: str = None
-
-    def toJson(self):
-        return json.dumps(self, default=lambda o: o.__dict__)
