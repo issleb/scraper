@@ -9,8 +9,9 @@ def get_movie(tag):
     year = _get_year(tag)
     link = _get_link(tag)
     rating = _get_rating(tag)
+    name = _get_name(tag)
 
-    movie = Movie(title=title, link=link, year=year, rating=rating)
+    movie = Movie(title=title, link=link, year=year, rating=rating, name=name)
     return movie
 
 def _get_title(text):
@@ -31,11 +32,16 @@ def _get_link(text):
 def _get_rating(text):
     regex = r'/a> \(....\) ([^<]*)' 
     result = _search(regex, text)
-    return result        
+    return result
+
+def _get_name(text):
+    regex = r'reviews[^/]+/([^\.]*).h' 
+    result = _search(regex, text)
+    return result    
 
 
 def _search(regex, text):
-    result = re.search(regex, text)
+    result = re.search(regex, text, re.IGNORECASE)
 
     if not result:
         return
@@ -49,3 +55,4 @@ class Movie:
     year: str = None
     link: str = None
     rating: str = None
+    name: str = None
