@@ -3,6 +3,7 @@ from dataclasses_json import dataclass_json
 import re
 
 def get_movie(tag):
+    tag = str(tag)
     
     title = _get_title(tag)
     year = _get_year(tag)

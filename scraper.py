@@ -22,8 +22,10 @@ else:
     for f in files:
         os.remove(f)
 
-movies = list(map(lambda n: parser.get_movie(str(n)), paragraphs))
+movies = [x for x in map(parser.get_movie, paragraphs) if x.year is not None]
+
+print(f'Total movies: {len(movies)}')
 
 with open(f'output/movies.json', 'w') as f:
     with redirect_stdout(f):
-        print(json.dumps(movies, default=lambda n: n.__dict__ ))
+        print(json.dumps(movies, default=lambda n: n.__dict__, indent=4))
