@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 import re
+import json
 
 def get_movie(tag):
+    
     title = _get_title(tag)
     year = _get_year(tag)
     link = _get_link(tag)
@@ -16,22 +18,22 @@ def get_movie(tag):
     return movie
 
 def _get_title(text):
-    regex = r'>([^<]*)</A>'
+    regex = r'>([^<]*)</a>'
     result = _search(regex, text)
     return result
 
 def _get_year(text):
-    regex = r'/A> \((....)'
+    regex = r'/a> \((....)'
     result = _search(regex, text)
     return result
 
 def _get_link(text):
-    regex = r'F="([^"]*)">'
+    regex = r'f="([^"]*)">'
     result = _search(regex, text)
     return result    
 
 def _get_rating(text):
-    regex = r'/A> \(....\) ([^<]*)' 
+    regex = r'/a> \(....\) ([^<]*)' 
     result = _search(regex, text)
     return result        
 
@@ -51,3 +53,6 @@ class Movie:
     year: str = None
     link: str = None
     rating: str = None
+
+    def toJson(self):
+        return json.dumps(self, default=lambda o: o.__dict__)
