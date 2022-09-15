@@ -14,7 +14,7 @@ page = requests.get(BASEURL + URL)
 soup = BeautifulSoup(page.content, "html.parser")
 paragraphs = soup.find_all('p')
 
-PATH = 'output'
+PATH = '../output'
 if not os.path.exists(PATH):
     os.makedirs(PATH)
 else:
@@ -26,6 +26,6 @@ movies = [x for x in map(parser.get_movie, paragraphs) if x.name is not None]
 
 print(f'Total movies: {len(movies)}')
 
-with open(f'output/movies.json', 'w') as f:
+with open(f'{PATH}/movies.json', 'w') as f:
     with redirect_stdout(f):
         print(json.dumps(movies, default=lambda n: n.__dict__, indent=4))
