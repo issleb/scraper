@@ -10,11 +10,15 @@ import dataclasses
 BASEURL = "http://1000misspenthours.com"
 URL = "/general/alphabeticalindex.htm"
 
-page = requests.get(BASEURL + URL)
-soup = BeautifulSoup(page.content, "html.parser")
+
+with open("data/alpha.htm") as fp:
+    soup = BeautifulSoup(fp, 'html.parser')
+
+# page = requests.get(BASEURL + URL)
+# soup = BeautifulSoup(page.content, "html.parser")
 paragraphs = soup.find_all('p')
 
-PATH = '../output'
+PATH = 'output'
 if not os.path.exists(PATH):
     os.makedirs(PATH)
 else:

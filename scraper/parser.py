@@ -14,6 +14,16 @@ def get_movie(tag):
     name = _get_name(tag)
 
     movie = Movie(title=title, link=link, year=year, rating=rating, name=name)
+
+    if movie.title is None:
+        print(f"Warning: Empty title on {tag}")
+    if movie.link is None:
+        print(f"Warning: Empty link on {tag}")        
+    if movie.year is None:
+        print(f"Warning: Empty year on {tag}")
+    if movie.rating is None:
+        print(f"Warning: Empty rating on {tag}")        
+
     return movie
 
 def _get_title(text):
@@ -22,7 +32,7 @@ def _get_title(text):
     return result
 
 def _get_year(text):
-    regex = r'/a> \((....)'
+    regex = r'/a> \(([^\)]*)'
     result = _search(regex, text)
     return result
 
@@ -32,7 +42,7 @@ def _get_link(text):
     return result    
 
 def _get_rating(text):
-    regex = r'/a> \(....\) ([^<]*)' 
+    regex = r'/a> \([^\)]*\) ([^<]*)' 
     result = _search(regex, text)
     return result
 

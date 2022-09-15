@@ -39,3 +39,13 @@ def test_bigp():
     assert result.year is None
     assert result.rating is None
     assert result.name is None
+
+def test_doubleyear():
+    DATA = '<P><A HREF="/reviews/reviewsa-d/afterdeath.htm">After Death/Zombie 4: After Death/Zombie Flesh Eaters 3/Oltre la Morte</A> (1988/1990) -**</P>'
+    result =  scraper.parser.get_movie(DATA)
+
+    assert result.title == "After Death/Zombie 4: After Death/Zombie Flesh Eaters 3/Oltre la Morte"
+    assert result.link == "/reviews/reviewsa-d/afterdeath.htm"
+    assert result.year == "1988/1990"
+    assert result.rating == "-**"
+    assert result.name == "afterdeath"  
