@@ -48,4 +48,16 @@ def test_doubleyear():
     assert result.link == "/reviews/reviewsa-d/afterdeath.htm"
     assert result.year == "1988/1990"
     assert result.rating == "-**"
-    assert result.name == "afterdeath"  
+    assert result.name == "afterdeath"
+
+def test_encoding():
+    DATA = '<P><A HREF="/reviews/reviewse-g/georgesmeliestrickfilms1900.htm">Addition and Subtraction/Tom Whiskey, ou L’Illusioniste Toqué</A> (1900) [unratable]</P>'
+    result =  scraper.parser.get_movie(DATA)
+
+    assert result.title == "Addition and Subtraction/Tom Whiskey, ou L’Illusioniste Toqué"
+    assert result.link == "/reviews/reviewse-g/georgesmeliestrickfilms1900.htm"
+    assert result.year == "1900"
+    assert result.rating == "[unratable]"
+    assert result.name == "georgesmeliestrickfilms1900"    
+
+    
