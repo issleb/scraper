@@ -22,7 +22,7 @@ else:
     for f in files:
         os.remove(f)
 
-movies = [x for x in map(parser.get_movie, paragraphs) if x.year is not None]
+movies = [x for x in map(parser.get_movie, paragraphs) if x.name is not None]
 
 print(f'Total movies: {len(movies)}')
 

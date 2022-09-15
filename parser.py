@@ -4,6 +4,8 @@ import re
 
 def get_movie(tag):
     tag = str(tag)
+    if "table" in tag.lower():
+        return Movie()
     
     title = _get_title(tag)
     year = _get_year(tag)

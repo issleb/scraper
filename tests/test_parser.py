@@ -30,3 +30,13 @@ def test_3():
     assert result.year == "1965"
     assert result.rating == "-****"
     assert result.name == "bloodypitofhorror"
+
+def test_bigp():
+    DATA = '<P><TABLE WIDTH="100%"><TR><TD WIDTH="5%"></TD><TD WIDTH="95%"><P><A HREF="/reviews/reviewsa-d/aliens.htm">Aliens</A> (1986) *****</P>'
+    result =  parser.get_movie(DATA)
+
+    assert result.title is None
+    assert result.link is None
+    assert result.year is None
+    assert result.rating is None
+    assert result.name is None
