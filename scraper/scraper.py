@@ -1,15 +1,41 @@
-from contextlib import redirect_stdout
 from bs4 import BeautifulSoup
 import parser
 import json
 import utils.file_manager
+import utils.saver
+import argparse
 
-with open("data/alpha.htm") as fp:
-    soup = BeautifulSoup(fp, 'html.parser')
+def save():
+    # utils.file_manager.clearOutput()
+    utils.saver.page_save("/general/alphabeticalindex.htm", "alpha.htm")
 
-paragraphs = soup.find_all('p')
-movies = [x for x in map(parser.get_movie, paragraphs) if x.name is not None]
-print(f'Total movies: {len(movies)}')
+def parse():
+    with open("data/alpha.htm") as fp:
+        soup = BeautifulSoup(fp, "html.parser")
 
-# utils.file_manager.clearOutput()
-utils.file_manager.savePage('movies.json', json.dumps(movies, default=lambda n: n.__dict__, indent=4))
+        paragraphs = soup.find_all('p')
+        movies = [x for x in map(parser.get_movie, paragraphs) if x.name is not None]
+        print(f'Total movies: {len(movies)}')
+
+        utils.file_manager.savePage('movies.json', json.dumps(movies, default=lambda n: n.__dict__, indent=4))
+
+
+argParser = argparse.ArgumentParser()
+argParser.add_argument("mode", help="(S)ave or (P)arse", choices=["S", "P"])
+args = argParser.parse_args()
+
+print(args.mode)
+
+if args.mode == "S":
+    save()
+elif args.mode == "P":
+    parse()
+
+## need python 3.10
+# match args.mode:
+#     case "S":
+#         save()
+#     case "M":
+#         parse()
+#     case _:
+#         # default
