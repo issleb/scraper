@@ -7,19 +7,14 @@ import argparse
 
 def save():
     utils.file_manager.clearOutput()
+
     #utils.saver.page_save("/general/alphabeticalindex.htm", "alpha.htm")
+    movies = utils.file_manager.getMovies("data/movies.json")
 
-    with open("data/movies.json") as fp:
-        movieJson = fp.read()
-
-        movies = parser.Movie.schema().loads(movieJson, many=True)
-        for movie in movies:
-            utils.saver.page_save(movie.link, movie.name + ".htm")
+    for movie in movies:
+        utils.saver.page_save(movie.link, movie.name + ".htm")
 
 def parse():
-    parse_alpha()
-
-def parse_alpha():
     with open("data/alpha.htm") as fp:
         soup = BeautifulSoup(fp, "html.parser")
 
@@ -29,16 +24,20 @@ def parse_alpha():
 
         utils.file_manager.savePage('movies.json', json.dumps(movies, default=lambda n: n.__dict__, indent=4)) 
 
+def clean():
+    pass
 
 
 argParser = argparse.ArgumentParser()
-argParser.add_argument("mode", help="(S)ave or (P)arse", choices=["S", "P"])
+argParser.add_argument("mode", help="(S)ave or (P)arse", choices=["S", "P", "C"])
 args = argParser.parse_args()
 
 if args.mode == "S":
     save()
 elif args.mode == "P":
     parse()
+elif args.mode == "C":
+    clean()    
 
 ## need python 3.10
 # match args.mode:
