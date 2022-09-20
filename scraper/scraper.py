@@ -6,7 +6,7 @@ import utils.saver
 import argparse
 
 def save():
-    utils.file_manager.clearOutput()
+    #utils.file_manager.clearOutput()
 
     #utils.saver.page_save("/general/alphabeticalindex.htm", "alpha.htm")
     movies = utils.file_manager.getMovies("data/movies.json")
