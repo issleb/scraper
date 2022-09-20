@@ -25,3 +25,7 @@ def getMovies(path):
 
         movies = parser.Movie.schema().loads(movieJson, many=True)
         return movies
+
+def getPageText(name):
+    with open(f"data/movies/{name}.htm") as fp:
+        return fp.read() 
