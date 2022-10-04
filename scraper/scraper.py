@@ -25,7 +25,17 @@ def parse():
         utils.file_manager.savePage('movies.json', json.dumps(movies, default=lambda n: n.__dict__, indent=4)) 
 
 def clean():
-    pass
+    movies = utils.file_manager.getMovies("data/movies.json")
+
+    with open("data/movies/xtheunknown.htm") as fp:
+        soup = BeautifulSoup(fp, "html.parser")
+        
+        print(f"looking for {soup.title.string}")
+        for movie in movies:
+            if movie.title == soup.title.string:
+                print(f"i found {movie.title}!")
+                break
+
 
 
 argParser = argparse.ArgumentParser()
