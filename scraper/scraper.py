@@ -4,6 +4,8 @@ import json
 import utils.file_manager
 import utils.saver
 import argparse
+import re
+
 
 def save():
     #utils.file_manager.clearOutput()
@@ -30,16 +32,32 @@ def clean():
     with open("data/movies/xtheunknown.htm") as fp:
         soup = BeautifulSoup(fp, "html.parser")
         
+        movie = None
+
         print(f"looking for {soup.title.string}")
-        for movie in movies:
-            if movie.title == soup.title.string:
-                print(f"i found {movie.title}!")
+        for m in movies:
+            if m.title == soup.title.string:
+                movie = m
+                print(f"i found {movie.title}!")               
                 break
+
+        if(not movie):
+            return
+
+        print(movie)
+
+        paras = soup.find_all(align="JUSTIFY")
+        poster = soup.find(src=re.compile("posters"))
+
+        print(len(paras))
+        print(poster.src) 
+
+
 
 
 
 argParser = argparse.ArgumentParser()
-argParser.add_argument("mode", help="(S)ave or (P)arse", choices=["S", "P", "C"])
+argParser.add_argument("mode", help="(S)ave, (P)arse or (Clean)", choices=["S", "P", "C"])
 args = argParser.parse_args()
 
 if args.mode == "S":
